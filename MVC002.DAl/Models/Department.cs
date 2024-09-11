@@ -11,7 +11,7 @@ namespace MVC002.DAL.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Code { get; set; }
+        public string Code { get; set; } 
         [Required]
         public string Name { get; set; }
         public DateTime DateOfCreation { get; set; } = DateTime.Now;

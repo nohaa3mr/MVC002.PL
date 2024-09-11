@@ -15,7 +15,7 @@ namespace MVC002.DAL.Configuation
         {
             builder.Property(d => d.Id).UseIdentityColumn(10, 10);
             builder.Property(d => d.Code).HasColumnType("nvarchar").HasMaxLength(50);
-            builder.Property(d => d.Name).HasColumnType("nvarchar").HasMaxLength(50);
+            builder.Property(d => d.Name).HasColumnType("nvarchar").HasMaxLength(50); 
 
         }
     }

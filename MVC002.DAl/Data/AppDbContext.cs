@@ -12,7 +12,7 @@ namespace MVC002.DAL.Data
 {
     internal class AppDbContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
             optionsBuilder.UseSqlServer("Server = . ; Database = MVCApp; Trusted_Connection = true");
         }
