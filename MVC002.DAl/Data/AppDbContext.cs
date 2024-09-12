@@ -7,12 +7,17 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MVC002.DAL.Data
 {
-    internal class AppDbContext:DbContext
+    public class AppDbContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) //Dependency Injection
+        {
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server = . ; Database = MVCApp; Trusted_Connection = true");
         }
