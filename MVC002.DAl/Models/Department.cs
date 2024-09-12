@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MVC002.DAL.Models
 {
-    internal class Department
+    public class Department
     {
         public int Id { get; set; }
         [Required]
-        public string Code { get; set; }
+        public string Code { get; set; } 
         [Required]
         public string Name { get; set; }
         public DateTime DateOfCreation { get; set; } = DateTime.Now;

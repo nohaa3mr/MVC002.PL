@@ -8,4 +8,8 @@
     <ProjectReference Include="..\MVC002.DAl\MVC002.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\NewFolder\" />
+  </ItemGroup>
+
 </Project>

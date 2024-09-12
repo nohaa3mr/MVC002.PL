@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MVC002.DAL.Configuation
 {
-    internal class DapartmentConf : IEntityTypeConfiguration<Department>
+    public class DapartmentConf : IEntityTypeConfiguration<Department>
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.Property(d => d.Id).UseIdentityColumn(10, 10);
             builder.Property(d => d.Code).HasColumnType("nvarchar").HasMaxLength(50);
-            builder.Property(d => d.Name).HasColumnType("nvarchar").HasMaxLength(50);
+            builder.Property(d => d.Name).HasColumnType("nvarchar").HasMaxLength(50); 
 
         }
     }

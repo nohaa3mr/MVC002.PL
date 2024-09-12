@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Department> 
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Departments</h1>
+<br  />
+<br />
+<a asp-controller="Departments " asp-action="Create" class = " btn btn-primary"> Create Department</a> 
+<br />
+<br />
+
+<table class="table table-striped table-hover">
+</br>
+    
+</br>
+    <thead>
+        <tr>
+ 
+            <th> Code </th>
+            <th> Name</th>
+            <th> Date Of Creation </th>
+            <th> Details </th>
+            <th>  Update </th>
+            <th>Delete </th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+
+
+    </tbody>
+    @foreach(var department in Model)
+    {
+        <tr> 
+
+        <td> @department.Code</td>
+        <td> @department.Name</td>
+        <td> @department.DateOfCreation</td>
+
+
+
+
+        </tr>
+    }
+
+</table>
+
+
+
+@Model 
