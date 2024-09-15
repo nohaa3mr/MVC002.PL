@@ -12,7 +12,7 @@ namespace MVC002.BLL.Interfaces
     {
         public IEnumerable<Department> GetAll();
 
-        Department Get(int Id);
+        Department GetById(int Id);
 
         int Add(Department Entity);
         int Update(Department Entity);

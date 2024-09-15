@@ -17,14 +17,14 @@ namespace MVC002.DAL.Data
         {
 
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server = . ; Database = MVCApp; Trusted_Connection = true");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server = . ; Database = MVCApp; Trusted_Connection = true");
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly( Assembly.GetExecutingAssembly());
         }
-        public DbSet<Department> departments  { get; set; }
+        public DbSet<Department> Departments  { get; set; }
     }
 }

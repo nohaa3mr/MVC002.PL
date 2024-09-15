@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using MVC002.BLL.Interfaces;
 using MVC002.BLL.Repositories;
 using MVC002.DAL.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MVC002
 {
@@ -26,16 +23,12 @@ namespace MVC002
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews(); 
-         //   services.AddTransient<AppDbContext>();//CLR will create a new obj in every single Command that user would do 
-            services.AddScoped<AppDbContext>();//CLR will create a one obj as long as app is cnnected to DB.
-        // services.AddSingleton<AppDbContext>(); //CLR will Create one obj and save its reference in HEAP ,and will be accessible as long as  application is connected
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-          services.AddScoped<DbContextOptions<AppDbContext>>(); //Dependency Injection
+            services.AddDbContext<AppDbContext>(Options => { Options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
 
             services.AddScoped<IDepartmentRepository, DepartmentRepository>(); //Allow DI for DepartmentRepository
-           
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+          
         }     
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
