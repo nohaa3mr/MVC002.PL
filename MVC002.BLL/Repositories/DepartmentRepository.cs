@@ -17,36 +17,32 @@ namespace MVC002.BLL.Repositories
             _context = context;
 
         }
-        public int Add(Department Entity)
+        public int Add(Department department)
         {
-            _context.departments.Add(Entity);
+            _context.Departments.Add(department);
             return _context.SaveChanges();
         }
 
-        public int Delete(Department Entity)
+        public int Delete(Department department)
         
         {
-            _context.departments.Remove(Entity);
+            _context.Departments.Remove(department);
             return _context.SaveChanges();
-        }
-
-        public Department Get(int Id)
-        {
-
-        //    return _context.departments.FirstOrDefault( D=> D.Id == Id);
-            return _context.departments.Find(Id);
-
-
         }
 
         public IEnumerable<Department> GetAll()
         {
-            return _context.departments.ToList();
+            return _context.Departments.ToList();
         }
 
-        public int Update(Department Entity)
+        public Department GetById(int Id)
         {
-            _context.departments.Update(Entity);
+            return _context.Departments.Where(x=> x.Id ==Id).FirstOrDefault();
+        }
+
+        public int Update(Department department)
+        {
+            _context.Departments.Update(department);
             return _context.SaveChanges();
         }
     }
