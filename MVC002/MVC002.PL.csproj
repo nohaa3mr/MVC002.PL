@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MVC002.BLL\MVC002.BLL.csproj" />
-    <ProjectReference Include="..\MVC002.DAl\MVC002.DAL.csproj" />
   </ItemGroup>
 
 </Project>

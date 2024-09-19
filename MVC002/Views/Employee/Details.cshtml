@@ -1,0 +1,19 @@
+﻿@using MVC002.DAL.Models
+@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+@model Employee 
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<form asp-action="Create" asp-controller="Employee" class=" btn btn-success"  >
+
+
+    <partial name="PartialViews/DeleteDetailsPartialView" />
+
+
+
+<a asp-action="Edit" asp-controller="Employee" asp-route-id="@Model.Id" class="btn btn-secondary"> Edit</a>
+<a asp-action="Index" asp-controller="Employee" asp-route-id="@Model.Id" class="btn btn-light"> Back To List</a>
+</form>

@@ -28,6 +28,7 @@ namespace MVC002
             services.AddDbContext<AppDbContext>(Options => { Options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
 
             services.AddScoped<IDepartmentRepository, DepartmentRepository>(); //Allow DI for DepartmentRepository
+            services.AddScoped<IEmployeeRepository,EmployeeRepository>();
           
         }     
 

@@ -4,14 +4,16 @@ using MVC002.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVC002.DAL.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240917134635_EmployeeModule")]
+    partial class EmployeeModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +64,6 @@ namespace MVC002.DAL.Data.Migrations
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -87,23 +86,7 @@ namespace MVC002.DAL.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("MVC002.DAL.Models.Employee", b =>
-                {
-                    b.HasOne("MVC002.DAL.Models.Department", "Department")
-                        .WithMany("Employees")
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("MVC002.DAL.Models.Department", b =>
-                {
-                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,7 +11,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MVC002.DAL.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) //Dependency Injection
         {
@@ -23,8 +23,9 @@ namespace MVC002.DAL.Data
         //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly( Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
-        public DbSet<Department> Departments  { get; set; }
-    }
-}
+         public DbSet<Department> Departments { get; set; }
+         public DbSet<Employee> Employees { get; set; }
+    }   }
