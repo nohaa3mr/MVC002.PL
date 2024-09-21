@@ -1,15 +1,16 @@
 ﻿@using MVC002.DAL.Models
+@using MVC002.PL.ViewModels
 @addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
-@model Employee
-
+@model EmployeeViewModel
 @{
     ViewData["Title"] = "Create ";
    
 }
 <h1>Add New Employee From This Form</h1>
 <br />
-<form asp-action="Create" asp-controller="Employee" class=" btn btn-success"  >
+<div asp-validation-summary="All"></div>
 
+ <form asp-action="Create">
     <partial name="PartialViews/CreateEditPartialView" />
     
      <a asp-action="Index" asp-controller="Employee" class="btn btn-dark" > Back To List </a>

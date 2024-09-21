@@ -16,11 +16,11 @@ namespace MVC002.Controllers
         [HttpGet]
         public IActionResult DeptHome()
         {
-            //ViewData: obj from dictionary type , transfer data from controller(Action) to its view.
-            ViewData["Message"] = "Hello From ViewData.";
+            ////ViewData: obj from dictionary type , transfer data from controller(Action) to its view.
+            //ViewData["Message"] = "Hello From ViewData.";
 
-            //ViewData: obj from dynamic type , transfer data from controller(Action) to its view.
-            ViewBag.Message = "Hello From ViewBag.";
+            ////ViewData: obj from dynamic type , transfer data from controller(Action) to its view.
+            //ViewBag.Message = "Hello From ViewBag.";
 
 
             var departments = _repository.GetAll();
@@ -39,7 +39,7 @@ namespace MVC002.Controllers
                 var Count = _repository.Add(dept);
                 if (Count > 0)
                 {
-                  TempData["Message"] = "Department Is Created.";
+                  //TempData["Message"] = "Department Is Created.";
 
                     return RedirectToAction(nameof(DeptHome));
                 }
@@ -114,15 +114,15 @@ namespace MVC002.Controllers
             try
             {
                 if (id != model.Id) return BadRequest();
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     var Count = _repository.Update(model);
                     if (Count > 0)
                     {
                         return RedirectToAction("DeptHome");
                     }
 
-                }
+              //  }
             }
             catch (Exception ex)
             {

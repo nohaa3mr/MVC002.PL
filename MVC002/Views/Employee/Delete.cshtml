@@ -1,18 +1,19 @@
-﻿@using MVC002.DAL.Models
+﻿@using MVC002.PL.ViewModels
 @addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
 
-@model Employee
+@model EmployeeViewModel
 @{
     ViewData["Title"] = "Delete";
 }
 
 <h3>Are You Sure Deleting Employee @Model.Name?</h3>
-<div asp-validation-summary="All"></div>
-<form asp-action="Delete">
 
-  
+<form asp-action="Delete" asp-controller="Employee" class=" btn btn-danger">
+
 
     <partial name="PartialViews/DeleteDetailsPartialView" />
+
+
 
 
     <input type="submit" value="Delete" class="btn btn-danger" />

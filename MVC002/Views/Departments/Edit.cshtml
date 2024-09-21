@@ -8,7 +8,7 @@
 
 <h1>Edit @Model.Name Department </h1>
 <div asp-validation-summary="All"></div>
-<form asp-action="Edit">
+<form asp-action="Edit" asp-controller="Departments">
     <div class="form-group">
         <label class="col-form-label" asp-for="Code"></label>
         <input class="form-control" asp-for="Code" />

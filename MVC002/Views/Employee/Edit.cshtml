@@ -1,13 +1,10 @@
-﻿@using MVC002.DAL.Models
+﻿@using MVC002.PL.ViewModels
 @addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
-
-@model Employee
-@{
-    ViewData["Title"] = "Edit";
-}
+@{  ViewData["Title"] = "Edit";}
+@model EmployeeViewModel
 <h1>Edit @Model.Name  </h1>
 
-  <form asp-controller = "Employee" asp-action="Edit">
+<form asp-action="Edit" asp-controller="Employee" class=" btn btn-primary">
 
 
     <partial name="PartialViews/CreateEditPartialView" />
@@ -19,7 +16,6 @@
     <input type="submit" value="Submit" class="btn btn-primary" />
 
 </form>
-
 <partial name="_ValidationScriptsPartial" />
 
 

@@ -6,12 +6,12 @@
 //     string VDataMessage = @ViewData["Message"] as string ; //Enforce type safety-> requires casting
 //     string VBagMessage = ViewBag.Message;                 //Doenst Enforce type Safety-> doesnt require casting 
  }
-@if(TempData["Message"] is not null)
+@* @if(TempData["Message"] is not null)
 {
     <div class="alert alert-danger">
         @TempData["Message"];
     </div>
-}
+} *@
 
 
 <div class="alert alert-success">

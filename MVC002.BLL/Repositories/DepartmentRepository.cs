@@ -11,7 +11,7 @@ namespace MVC002.BLL.Repositories
 {
     public class DepartmentRepository : GenericRepository<Department>, IDepartmentRepository
     {
-        public DepartmentRepository(AppDbContext dbContext) : base(dbContext)
+        public DepartmentRepository(AppDbContext dbContext) : base(dbContext) //Ask CLR to create an obj to open the connection for database.
         { 
         
         

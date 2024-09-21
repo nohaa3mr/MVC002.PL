@@ -1,12 +1,14 @@
-﻿@using MVC002.DAL.Models
+﻿@using MVC002.BLL.Interfaces
+@using MVC002.PL.ViewModels
 @addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
-@model Employee
+@model EmployeeViewModel
+@inject IDepartmentRepository departmentrepo
 @{
-    var Departments = new SelectList(ViewBag.Departments, "Id", "Name");
+    var departments = new SelectList(departmentrepo.GetAll(), "Id", "Name");
 }
 <div class="form-group">
     <label class="col-form-label" asp-for="Name"></label>
-    <input class="form-control" asp-for="Name" />
+    <input class="form-control" asp-for="Name" /> 
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
 
@@ -41,7 +43,7 @@
 
 <div class="form-group">
     <label class="col-form-label" asp-for="Department"></label>
-    <select class="col-form-label" asp-items="@Departments" asp-for="DepartmentId">
+    <select class="col-form-label" asp-items="@departments" asp-for="DepartmentId">
         <option value="@null">--Select Department--</option> 
     </select>
 </div>

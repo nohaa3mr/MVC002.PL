@@ -1,9 +1,6 @@
-﻿@using MVC002.DAL.Models
+﻿@using MVC002.PL.ViewModels
 @addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
- @model Employee
-@{
-    var Departments = new SelectList(ViewBag.Departments, "Id", "Name");
-}
+ @model EmployeeViewModel
 
 <div class="form-group">
     <label class="col-form-label" asp-for="Name"></label>
@@ -34,13 +31,6 @@
 <div class="form-group">
     <label class="col-form-label" asp-for="Salary"></label>
     <input readonly class="form-control" asp-for="Salary" />
-</div>
-
-<div class="form-group">
-    <label class="col-form-label" asp-for="Department"></label>
-    <select class="col-form-label" asp-items="@Departments" asp-for="DepartmentId">
-        <option value="@null">--Select Department--</option>
-    </select>
 </div>
 
 <div class="form-group">
