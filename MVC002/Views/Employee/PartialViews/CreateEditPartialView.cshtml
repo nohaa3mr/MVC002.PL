@@ -4,8 +4,9 @@
 @model EmployeeViewModel
 @inject IDepartmentRepository departmentrepo
 @{
-    var departments = new SelectList(departmentrepo.GetAll(), "Id", "Name");
+    var departments = new SelectList(departmentrepo.GetAll().Result , "Id", "Name");
 }
+<input asp-for="ImageName " hidden />
 <div class="form-group">
     <label class="col-form-label" asp-for="Name"></label>
     <input class="form-control" asp-for="Name" /> 
@@ -47,6 +48,12 @@
         <option value="@null">--Select Department--</option> 
     </select>
 </div>
+
+<div class="form-group">
+    <label class="col-form-label" asp-for="Image"></label>
+    <input class="form-control" asp-for="Image" />
+</div>
+
 
 <div class="form-group">
     <label class="col-form-label" asp-for="IsActive"></label>

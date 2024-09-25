@@ -14,40 +14,37 @@ namespace MVC002.BLL.Repositories
     {
         private readonly AppDbContext _app;
 
-        public GenericRepository( AppDbContext app)
+        public GenericRepository(AppDbContext app)
         {
             _app = app;
         }
-        public int Add(T entity)
+        public async Task Add(T entity)
         {
-              _app.Add(entity);
-            return _app.SaveChanges();
+          await  _app.AddAsync(entity);
         }
 
-        public int Delete(T entity)
+        public void Delete(T entity)
         {
-            _app.Remove(entity);
-            return _app.SaveChanges();
+             _app.Remove(entity);
         }
-
-        public IEnumerable<T> GetAll()
+        
+        public async Task<IEnumerable<T>> GetAll()
         {
                if(typeof(T) == typeof(Employee)) 
                {
-               return (IEnumerable<T>)_app.Employees.Include( e=>e.Department).ToList();
+               return (IEnumerable<T>) await _app.Employees.Include( e=>e.Department).ToListAsync();
 
                }
-            return _app.Set<T>().ToList();
+            return await _app.Set<T>().ToListAsync();
         }
 
-        public T GetById(int id)
-            => _app.Set<T>().Find(id);
+        public async Task<T> GetById(int id)
+            =>   await _app.Set<T>().FindAsync(id);
         
 
-        public int Update(T entity)
+        public  void Update(T entity)
         {
             _app.Update(entity);
-            return _app.SaveChanges();
                
         }
     }

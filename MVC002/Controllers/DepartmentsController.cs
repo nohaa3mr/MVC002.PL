@@ -2,29 +2,28 @@
 using MVC002.DAL.Models;
 using MVC002.BLL.Interfaces;
 using System;
+using AutoMapper;
+using MVC002.PL.ViewModels;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MVC002.Controllers
 {
     public class DepartmentsController : Controller
     {
-        private readonly IDepartmentRepository _repository;
-        public DepartmentsController(IDepartmentRepository departmentRepository) //Dependency Injection to not throw null exception
-        {
-            _repository = departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
+        public DepartmentsController(IUnitOfWork unitOfWork) //Dependency Injection to not throw null exception
+        {
+             _unitOfWork = unitOfWork;
         }
         [HttpGet]
         public IActionResult DeptHome()
         {
-            ////ViewData: obj from dictionary type , transfer data from controller(Action) to its view.
-            //ViewData["Message"] = "Hello From ViewData.";
+            var Departments = _unitOfWork.DepartmentRepository.GetAll();
 
-            ////ViewData: obj from dynamic type , transfer data from controller(Action) to its view.
-            //ViewBag.Message = "Hello From ViewBag.";
-
-
-            var departments = _repository.GetAll();
-            return View(departments);
+            return View(Departments);
+            
         }
         [HttpGet]
         public IActionResult Create()
@@ -32,56 +31,58 @@ namespace MVC002.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Department dept)
+        public  async Task<IActionResult> Create(Department department)
         {
-            if (ModelState.IsValid) //server side validation
+            await _unitOfWork.DepartmentRepository.Add(department);
+            int result = await _unitOfWork.SaveChangesCompleted();
+            if (result > 0)
             {
-                var Count = _repository.Add(dept);
-                if (Count > 0)
-                {
-                  //TempData["Message"] = "Department Is Created.";
-
-                    return RedirectToAction(nameof(DeptHome));
-                }
+                TempData["Message"] = "Department Is Created.";
             }
+            else
+            { return RedirectToAction("DeptHome"); }
 
-            return View(dept);
+            return  View(department);
+           
         }
-        public IActionResult Details(int? id , string ViewName = "Details")
+
+             
+             
+     
+        public async Task<IActionResult> Details(int? id , string ViewName = "Details")
         {
             if (id is null)
-                return BadRequest(); //Invaild //Return Status Code 
-            var department = _repository.GetById(id.Value);
+            return  BadRequest(); 
+            var department  = await _unitOfWork.DepartmentRepository.GetById(id.Value);
             if (department is null) return NotFound();
 
             return View(ViewName,department);
         }
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task< IActionResult> Delete(int? id)
         {
-            if (id is null) return BadRequest();
-            var department = _repository.GetById(id.Value);
-            if (department is null)
-                return NotFound();
-            return View(department);
+            //if (id is null) 
+            // return  BadRequest();
+            //var department =  _unitOfWork.DepartmentRepository.GetById(id.Value);
+            //if (department is null)
+            //    return NotFound();
+             return await Details(id,"Delete");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int? id, Department model)
+        public async Task <IActionResult> Delete([FromRoute] int? id, Department model)
         {
 
             try
             {
                 if (id != model.Id) 
-                    return BadRequest();
+                   return BadRequest();
                 if (ModelState.IsValid)
                 {
-                    var Count = _repository.Delete(model);
-                    if (Count > 0)
-                    {
-                       return RedirectToAction("DeptHome");
-                    }
-
+                      _unitOfWork.DepartmentRepository.Delete(model) ;
+                    await  _unitOfWork.SaveChangesCompleted();
+                       return   RedirectToAction("DeptHome");
+                   
                 }
             }
             catch (Exception ex)
@@ -93,45 +94,38 @@ namespace MVC002.Controllers
 
 
 
-            return View(model);
+            return  View(model);
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult>  Edit(int? id)
         {
-            if (id is null) 
-           return BadRequest();
-            var department = _repository.GetById(id.Value);
-            if (department is null)  
-             return NotFound();
-            return Details( id , "Edit");
+           // if (id is null) 
+           //return BadRequest();
+           // var department = await _unitOfWork.DepartmentRepository.GetById(id.Value);
+           // if (department is null)  
+           //  return NotFound();
+            return await Details( id , "Edit");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int? id, Department model)
+        public async Task<IActionResult> Edit([FromRoute] int? id, Department model)
         {
 
             try
             {
-                if (id != model.Id) return BadRequest();
-                //if (ModelState.IsValid)
-                //{
-                    var Count = _repository.Update(model);
-                    if (Count > 0)
-                    {
-                        return RedirectToAction("DeptHome");
-                    }
-
-              //  }
+                if (id != model.Id) 
+                 return BadRequest();
+             
+                _unitOfWork.DepartmentRepository.Update(model);
+              await   _unitOfWork.SaveChangesCompleted();
+                        return RedirectToAction(nameof(DeptHome));
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
 
             }
-
-
-
 
             return View(model);
         }

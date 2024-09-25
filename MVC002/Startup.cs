@@ -27,8 +27,11 @@ namespace MVC002
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<AppDbContext>(Options => { Options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
             services.AddScoped<IDepartmentRepository, DepartmentRepository>(); //Allow DI for DepartmentRepository
-            services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            //services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
+            services.AddAutoMapper(D => D.AddProfile(new DepartmentProfile()));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

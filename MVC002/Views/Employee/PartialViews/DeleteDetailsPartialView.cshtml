@@ -2,6 +2,14 @@
 @addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
  @model EmployeeViewModel
 
+@if(Model.ImageName is not null)
+{
+    <div class=" form-group">
+        <input asp-for="ImageName " hidden />
+        <img src="~/Files/Images/@Model.ImageName" class="rounded" height="50" width="50" />
+    </div>
+}
+
 <div class="form-group">
     <label class="col-form-label" asp-for="Name"></label>
     <input readonly class="form-control" asp-for="Name" />

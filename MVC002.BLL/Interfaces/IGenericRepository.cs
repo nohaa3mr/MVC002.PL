@@ -8,11 +8,11 @@ namespace MVC002.BLL.Interfaces
 {
     public interface IGenericRepository<T>
     {
-         IEnumerable<T> GetAll();
-        T GetById(int id);
-        int Add(T entity);
-        int Update(T entity);
-        int Delete(T entity);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetById(int id);
+      Task Add(T entity);
+       void Update(T entity);
+       void Delete(T entity);
 
     }
 }

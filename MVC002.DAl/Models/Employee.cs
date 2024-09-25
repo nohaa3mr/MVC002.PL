@@ -21,6 +21,7 @@ namespace MVC002.DAL.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime HireDate { get; set; }
+        public string ImageName { get; set; }
         public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
         public int ? DepartmentId { get; set; }  //FK
