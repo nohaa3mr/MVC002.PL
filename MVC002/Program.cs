@@ -1,14 +1,17 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Graph.Models;
+using MVC002.BLL.Interfaces;
 using MVC002.BLL.Repositories;
 using MVC002.DAL.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MVC002.DAL.Data.Migrations;
+using MVC002.PL.Profiles;
+
 
 namespace MVC002
 {
@@ -16,14 +19,56 @@ namespace MVC002
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var Builder = WebApplication.CreateBuilder(args);
+            Builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            Builder.Services.AddDbContext<AppDbContext>(Options => { Options.UseSqlServer(Builder.Configuration.GetConnectionString("DefaultConnection")); });
+            Builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); //Allow DI for DepartmentRepository
+            //services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            Builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
+            Builder.Services.AddAutoMapper(D => D.AddProfile(new DepartmentProfile()));
+
+            Builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            Builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+            {
+                Options.Password.RequireNonAlphanumeric = true;
+                Options.Password.RequireLowercase = true;
+                Options.Password.RequireUppercase = true;
+                Options.Password.RequireDigit = true;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            Builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.AccessDeniedPath = "Home/Error"; options.LoginPath = "Account/Login"; });
+          var app=  Builder.Build();
+
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Account}/{action=Register}/{id?}");
+            });
+
+            app.Run();
+
+
         }
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+
 
 
     }

@@ -1,6 +1,4 @@
-﻿@using MVC002.DAL.Models
-@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<Department>
+﻿@model IEnumerable<Department>
 @{
     ViewData["Title"] = "Departments";
  }
@@ -13,12 +11,11 @@
 
 
 <div class="alert alert-success">
-    @ViewBag.Message <!-- it will override on ViewData and ViewBag Because its from Dynamic type -->
+    @ViewBag.Message
 </div>
 <h1>All Departments</h1>
 <br />
-<br />
-<a asp-controller="Departments" asp-action="Create" class="btn btn-primary">Create Department</a>
+<a asp-controller="Departments" asp-action="Create" class="btn btn-primary">Add New Department</a>
 <br />
 @if (Model.Count() > 0)
 {

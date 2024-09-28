@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MVC002.BLL.Repositories
 {
-    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository 
     {
         private readonly AppDbContext _dbContext;
 
@@ -20,7 +20,8 @@ namespace MVC002.BLL.Repositories
             _dbContext = dbContext;
         }
 
-      
+        
+
         public IQueryable<Employee> GetByAddress(string address)
         {
             return _dbContext.Employees.Where(emp => emp.Address == address);
@@ -29,6 +30,11 @@ namespace MVC002.BLL.Repositories
         public IQueryable<Employee> GetByName(string name)
         {
             return _dbContext.Employees.Where(e => e.Name.ToLower().Contains(name.ToLower()));
+        }
+
+        public Task<int> SaveChangesCompleted()
+        {
+            throw new NotImplementedException();
         }
     }
 }

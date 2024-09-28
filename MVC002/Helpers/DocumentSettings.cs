@@ -8,11 +8,12 @@ namespace MVC002.PL.Helpers
     { 
         public static string UploadFile(IFormFile file , string FolderName)
         {
-            string FolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", FolderName);
-            string FileName = $"{Guid.NewGuid()}{file.FileName}";
-            string FilePath = Path.Combine(FolderPath, FileName);
+			//string FolderPath = C:\Users\HP\source\repos\MVC002\MVC002\wwwroot\Files\Images
+			string FolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", FolderName);
+            string FileName = $"{Guid.NewGuid()}{file.FileName}"; //Photo its self
+            string FilePath = Path.Combine(FolderPath, FileName); //filepath = folderpath+ filename
 
-        using var FileStream = new FileStream(FilePath,FileMode.Create);
+            using var FileStream = new FileStream(FilePath,FileMode.Create);
             file.CopyTo(FileStream);
 
             return FileName;

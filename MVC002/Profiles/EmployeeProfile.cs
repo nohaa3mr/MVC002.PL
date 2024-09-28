@@ -7,7 +7,7 @@ namespace MVC002.PL.Profiles
 {
     public class EmployeeProfile:Profile
     {
-        public EmployeeProfile():base()
+        public EmployeeProfile()
         {
             CreateMap<EmployeeViewModel, Employee>().ReverseMap();
         }

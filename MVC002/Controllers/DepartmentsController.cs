@@ -3,32 +3,32 @@ using MVC002.DAL.Models;
 using MVC002.BLL.Interfaces;
 using System;
 using AutoMapper;
-using MVC002.PL.ViewModels;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC002.Controllers
-{
+{ 
+
     public class DepartmentsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentsController(IUnitOfWork unitOfWork) //Dependency Injection to not throw null exception
+        public DepartmentsController(IUnitOfWork unitOfWork ) 
         {
              _unitOfWork = unitOfWork;
         }
         [HttpGet]
-        public IActionResult DeptHome()
+        public async Task<IActionResult> DeptHome()
         {
-            var Departments = _unitOfWork.DepartmentRepository.GetAll();
+            var Departments = await _unitOfWork.DepartmentRepository.GetAll();
 
-            return View(Departments);
+            return  View(Departments);
             
         }
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return  View();
         }
         [HttpPost]
         public  async Task<IActionResult> Create(Department department)
@@ -40,37 +40,38 @@ namespace MVC002.Controllers
                 TempData["Message"] = "Department Is Created.";
             }
             else
-            { return RedirectToAction("DeptHome"); }
+             return RedirectToAction("DeptHome");
 
-            return  View(department);
-           
+
+            return View(department);
+        
         }
 
              
-             
-     
         public async Task<IActionResult> Details(int? id , string ViewName = "Details")
         {
             if (id is null)
-            return  BadRequest(); 
+            return  BadRequest();
             var department  = await _unitOfWork.DepartmentRepository.GetById(id.Value);
-            if (department is null) return NotFound();
+
+            if (department is null)
+               return NotFound();
 
             return View(ViewName,department);
         }
         [HttpGet]
         public async Task< IActionResult> Delete(int? id)
         {
-            //if (id is null) 
-            // return  BadRequest();
-            //var department =  _unitOfWork.DepartmentRepository.GetById(id.Value);
-            //if (department is null)
-            //    return NotFound();
-             return await Details(id,"Delete");
+            if (id is null)
+                return BadRequest();
+            var department = await _unitOfWork.DepartmentRepository.GetById(id.Value);
+            if (department is null)
+                return NotFound();
+            return await Details(id,"Delete");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> Delete([FromRoute] int? id, Department model)
+        public async Task<IActionResult> Delete(Department model,[FromRoute] int? id  )
         {
 
             try
@@ -99,24 +100,24 @@ namespace MVC002.Controllers
         [HttpGet]
         public async Task<IActionResult>  Edit(int? id)
         {
-           // if (id is null) 
-           //return BadRequest();
-           // var department = await _unitOfWork.DepartmentRepository.GetById(id.Value);
-           // if (department is null)  
-           //  return NotFound();
+            if (id is null)
+                return BadRequest();
+            var department = await _unitOfWork.DepartmentRepository.GetById(id.Value);
+            if (department is null)
+                return NotFound();
             return await Details( id , "Edit");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromRoute] int? id, Department model)
+        public async Task<IActionResult> Edit( Department model , [FromRoute] int? id)
         {
 
             try
             {
                 if (id != model.Id) 
                  return BadRequest();
-             
+
                 _unitOfWork.DepartmentRepository.Update(model);
               await   _unitOfWork.SaveChangesCompleted();
                         return RedirectToAction(nameof(DeptHome));

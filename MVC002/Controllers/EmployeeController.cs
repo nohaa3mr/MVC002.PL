@@ -65,8 +65,8 @@ namespace MVC002.PL.Controllers
             #endregion
 
             //2.Auto Mapping -> install package [auto mapper]
-                 employeeVM.ImageName=  DocumentSettings.UploadFile(employeeVM.Image, "Images");
-                var MappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
+              employeeVM.ImageName=  DocumentSettings.UploadFile(employeeVM.Image, "Images");
+              var MappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
               await  _unitOfWork.EmployeeRepository.Add(MappedEmployee);
               await  _unitOfWork.SaveChangesCompleted();
             
@@ -79,27 +79,23 @@ namespace MVC002.PL.Controllers
         }
 
 
-        public IActionResult Details(int? id, string ViewName = "Details")
+        public async Task<IActionResult>Details(int? id, string ViewName = "Details" )
         {
             if (id is null)
-                return BadRequest(); //Invaild //Return Status Code 
-                                     //Invalid
-
-            var employee = _unitOfWork.EmployeeRepository.GetById(id.Value);
-            _unitOfWork.SaveChangesCompleted();
-            var MappedEmployee = _mapper.Map <EmployeeViewModel>(employee);
+             return BadRequest();
+			var employee =await _unitOfWork.EmployeeRepository.GetById(id.Value);
 
             if (employee is null) 
                return NotFound();
-          
 
-            return View(ViewName, MappedEmployee);
+            var Mappedemp =  _mapper.Map<Employee, EmployeeViewModel>(employee);
+            return View(ViewName,Mappedemp );
         }
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public  async Task< IActionResult> Delete(int? id)
         {
           
-            return Details(id , "Delete");
+            return await Details(id ,"Delete");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -132,24 +128,24 @@ namespace MVC002.PL.Controllers
            
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public  async Task<IActionResult> Edit(int? id, EmployeeViewModel model)
         {
-            //if (id is null)
-            //    return BadRequest();
-            //var employee = _employeeRepository.GetById(id.Value);
-            //ViewBag.Departments = _departmentRepository.GetAll();
+            if (id is null)
+                return BadRequest();
+            var employee = await _unitOfWork.EmployeeRepository.GetById(id.Value);
+            ViewBag.Departments = await _unitOfWork.EmployeeRepository.GetAll();
 
-            //if (employee is null)
-            //{
-            //    return NotFound();
-            //}
+            if (employee is null)
+            {
+                return NotFound();
+            }
 
-            return Details(id, "Edit");
+            return await Details(id, "Edit");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit( EmployeeViewModel employee , [FromRoute]int?id)
+        public async Task<IActionResult> Edit( EmployeeViewModel employee , [FromRoute]int?id)
         {
             if (id != employee.Id)
                 return BadRequest();
@@ -160,9 +156,12 @@ namespace MVC002.PL.Controllers
                 employee.ImageName = DocumentSettings.UploadFile(employee.Image, "Images");
 
             }
-            var MappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
-            _unitOfWork.EmployeeRepository.Update(MappedEmployee);
-            return View(employee);
+            employee.ImageName = DocumentSettings.UploadFile(employee.Image, "Images");
+            var MappedEmployee =  _mapper.Map<EmployeeViewModel, Employee>(employee);
+               _unitOfWork.EmployeeRepository.Update(MappedEmployee);
+            await _unitOfWork.SaveChangesCompleted();
+
+            return RedirectToAction("Index");
         }
 
     }

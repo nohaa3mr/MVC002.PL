@@ -1,7 +1,6 @@
-﻿@using MVC002.PL.ViewModels
-@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model EmployeeViewModel
 @{  ViewData["Title"] = "Edit";}
-@model EmployeeViewModel
+
 <h1>Edit @Model.Name  </h1>
 
 <form asp-action="Edit" asp-controller="Employee" class=" btn btn-primary">

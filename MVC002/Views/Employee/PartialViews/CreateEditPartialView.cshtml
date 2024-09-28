@@ -1,10 +1,8 @@
 ﻿@using MVC002.BLL.Interfaces
-@using MVC002.PL.ViewModels
-@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
 @model EmployeeViewModel
 @inject IDepartmentRepository departmentrepo
 @{
-    var departments = new SelectList(departmentrepo.GetAll().Result , "Id", "Name");
+    var departments = new SelectList(await departmentrepo.GetAll() , "Id", "Name");
 }
 <input asp-for="ImageName " hidden />
 <div class="form-group">

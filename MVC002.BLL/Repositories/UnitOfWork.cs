@@ -1,5 +1,7 @@
-﻿using MVC002.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using MVC002.BLL.Interfaces;
 using MVC002.DAL.Data;
+using MVC002.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,7 @@ namespace MVC002.BLL.Repositories
         public void Dispose()
         {
             _dbcontext.Dispose();
-         }
+        }
+       
     }
 }

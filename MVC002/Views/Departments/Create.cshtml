@@ -1,5 +1,4 @@
-﻿@using MVC002.DAL.Models
-@addTagHelper * , Microsoft.AspNetCore.Mvc.TagHelpers
+﻿
 @model Department
 
 @{
@@ -28,7 +27,7 @@
         <input class="form-control" asp-for="DateOfCreation" />
         <span asp-validation-for="DateOfCreation" class="text-danger"></span>
     </div>
-    <input type="submit" value="Submit" class="btn btn-primary" />
+    <input type="submit" value="Done" class="btn btn-primary" asp-action="DeptHome" />
     <a asp-action="Index" asp-controller="Departments" class="btn btn-dark"> Back To List </a>
 </form>
 
