@@ -1,18 +1,17 @@
-﻿using System;
+﻿using MVC002.DAL.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MVC002;
-namespace MVC002.DAL.Models
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace MVC002.PL.ViewModels
 {
-    public class Department
-    { 
+    public class DepartmentViewModel
+    {
         public int Id { get; set; }
-        public string Code { get; set; } 
+        [Required(ErrorMessage = "Code Is Required")]
+        public string Code { get; set; }
+        [Required(ErrorMessage = "Name Is Required")]
         public string Name { get; set; }
         public DateTime DateOfCreation { get; set; } = DateTime.Now;
 

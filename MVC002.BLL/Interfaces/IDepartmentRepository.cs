@@ -8,15 +8,9 @@ using System.Threading.Tasks;
 
 namespace MVC002.BLL.Interfaces
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository :IGenericRepository<Department>
     {
-        public IEnumerable<Department> GetAll();
-
-        Department GetById(int Id);
-
-        int Add(Department Entity);
-        int Update(Department Entity);
-        int Delete(Department Entity);
+       
 
     }
 }
