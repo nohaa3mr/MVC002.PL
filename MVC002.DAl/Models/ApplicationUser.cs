@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace MVC002.DAL.Models
 {
     public class ApplicationUser : IdentityUser
-
     {
         [Required]
         public string FName { get; set; }

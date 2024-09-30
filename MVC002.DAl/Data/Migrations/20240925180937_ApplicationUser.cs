@@ -4,6 +4,12 @@ namespace MVC002.DAL.Data.Migrations
 {
     public partial class ApplicationUser : Migration
     {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public int PhoneNumber { get; set; }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
@@ -26,6 +32,8 @@ namespace MVC002.DAL.Data.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
+
+          
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

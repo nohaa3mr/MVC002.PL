@@ -1,0 +1,20 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Delete @Model.RoleName</h2>
+
+<div asp-validation-summary="All"></div>
+<form asp-action="Delete">
+    <div class="form-group">
+        <label class="col-form-label" asp-for="RoleName">
+            <input readonly class="form-control" asp-for="RoleName" />
+        </label>
+    </div>
+
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+
+</form>

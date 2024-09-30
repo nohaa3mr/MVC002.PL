@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +11,10 @@ using MVC002.BLL.Interfaces;
 using MVC002.BLL.Repositories;
 using MVC002.DAL.Data;
 using MVC002.DAL.Data.Migrations;
+using MVC002.DAL.Models;
 using MVC002.PL.Profiles;
+using System.Collections.Generic;
+using ApplicationUser = MVC002.DAL.Models.ApplicationUser;
 
 
 namespace MVC002
@@ -20,15 +24,13 @@ namespace MVC002
         public static void Main(string[] args)
         {
             var Builder = WebApplication.CreateBuilder(args);
+
             Builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             Builder.Services.AddDbContext<AppDbContext>(Options => { Options.UseSqlServer(Builder.Configuration.GetConnectionString("DefaultConnection")); });
             Builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); //Allow DI for DepartmentRepository
-            //services.AddScoped<IEmployeeRepository,EmployeeRepository>();
-            Builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
-            Builder.Services.AddAutoMapper(D => D.AddProfile(new DepartmentProfile()));
-
+            Builder.Services.AddAutoMapper(M => M.AddProfiles(new List<Profile>() { new UserProfile(), new DepartmentProfile(), new EmployeeProfile()  , new RoleProfile()}));
             Builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            Builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+            Builder.Services.AddIdentity <ApplicationUser, IdentityRole>(Options =>
             {
                 Options.Password.RequireNonAlphanumeric = true;
                 Options.Password.RequireLowercase = true;
@@ -51,10 +53,8 @@ namespace MVC002
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-            app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
