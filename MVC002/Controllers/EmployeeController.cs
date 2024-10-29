@@ -7,6 +7,7 @@ using MVC002.PL.Helpers;
 using MVC002.PL.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MVC002.PL.Controllers
@@ -64,16 +65,24 @@ namespace MVC002.PL.Controllers
 
             #endregion
 
-            //2.Auto Mapping -> install package [auto mapper]
-              employeeVM.ImageName=  DocumentSettings.UploadFile(employeeVM.Image, "Images");
+           try
+            { 
+                //2.Auto Mapping -> install package [auto mapper]
+                employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image, "Images");
               var MappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
-              await  _unitOfWork.EmployeeRepository.Add(MappedEmployee);
-              await  _unitOfWork.SaveChangesCompleted();
-            
-            TempData["Message"] = "New Employee Is Created.";
+              await _unitOfWork.EmployeeRepository.Add(MappedEmployee);
+              await _unitOfWork.SaveChangesCompleted();
 
-            return RedirectToAction(nameof(Index));
-            
+             TempData["Message"] = "New Employee Is Created.";
+
+             return RedirectToAction(nameof(Index));
+            }
+            catch(Exception ex)
+            {
+				ModelState.AddModelError(string.Empty, ex.Message);
+
+				return View(employeeVM);
+			}
 
 
         }
@@ -145,23 +154,29 @@ namespace MVC002.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( EmployeeViewModel employee , [FromRoute]int?id)
-        {
-            if (id != employee.Id)
-                return BadRequest();
-            if (employee is null)
-                return NotFound();
-            if (employee.Image is not null)
-            {
-                employee.ImageName = DocumentSettings.UploadFile(employee.Image, "Images");
+        public async Task<IActionResult> Edit(EmployeeViewModel employee, [FromRoute] int? id)
+         {
+            if(id != employee.Id)
+              return BadRequest();
+            if (employee is null)  return NotFound();
+           
+                try
+                {
 
-            }
-            employee.ImageName = DocumentSettings.UploadFile(employee.Image, "Images");
-            var MappedEmployee =  _mapper.Map<EmployeeViewModel, Employee>(employee);
-               _unitOfWork.EmployeeRepository.Update(MappedEmployee);
-            await _unitOfWork.SaveChangesCompleted();
+                 employee.ImageName = DocumentSettings.UploadFile(employee.Image, "Images");
+                    var MappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employee);
+                    _unitOfWork.EmployeeRepository.Update(MappedEmployee);
+                    await _unitOfWork.SaveChangesCompleted();
+
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
 
             return RedirectToAction("Index");
+            
         }
 
     }

@@ -23,10 +23,10 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+/* Provide sufficient contrast against white background */
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
+    /* Sticky footer styles-------------------------------------------------- */
+    html {
   font-size: 14px;
 }
 @media (min-width: 768px) {

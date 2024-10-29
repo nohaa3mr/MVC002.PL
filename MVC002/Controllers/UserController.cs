@@ -122,7 +122,6 @@ namespace MVC002.PL.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return RedirectToAction("Error");
             }
-            return View(model);
 
 
         }

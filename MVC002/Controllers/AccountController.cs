@@ -24,6 +24,7 @@ namespace MVC002.PL.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public  async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (model == null)
@@ -40,11 +41,11 @@ namespace MVC002.PL.Controllers
 
           var result = await _user.CreateAsync(User, model.Password);
             if (result.Succeeded)
-           
-                return RedirectToAction("Login");
-            
-            else
-                foreach (var error in result.Errors )
+
+				return RedirectToAction(nameof(Index), "Home");
+
+			else
+				foreach (var error in result.Errors )
               
                     ModelState.AddModelError(string.Empty,  error.Description);
              return View(model);

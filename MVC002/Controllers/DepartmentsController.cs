@@ -31,20 +31,24 @@ namespace MVC002.Controllers
             return  View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public  async Task<IActionResult> Create(Department department)
         {
-            await _unitOfWork.DepartmentRepository.Add(department);
-            int result = await _unitOfWork.SaveChangesCompleted();
-            if (result > 0)
-            {
-                TempData["Message"] = "Department Is Created.";
-            }
-            else
-             return RedirectToAction("DeptHome");
+           try
+           { 
+				await _unitOfWork.DepartmentRepository.Add(department);
+				int result = await _unitOfWork.SaveChangesCompleted();
 
+                TempData["Message"] = "New Department Is Created.";
 
-            return View(department);
-        
+					return RedirectToAction(nameof(DeptHome));
+           }
+		   catch(Exception ex)
+		   {
+				ModelState.AddModelError(string.Empty, ex.Message);
+		   }
+
+			return View(department);
         }
 
              
@@ -117,10 +121,13 @@ namespace MVC002.Controllers
             {
                 if (id != model.Id) 
                  return BadRequest();
-
-                _unitOfWork.DepartmentRepository.Update(model);
-              await   _unitOfWork.SaveChangesCompleted();
-                        return RedirectToAction(nameof(DeptHome));
+                if(model != null)
+                {
+					_unitOfWork.DepartmentRepository.Update(model);
+					await _unitOfWork.SaveChangesCompleted();
+					return RedirectToAction(nameof(DeptHome));
+				}
+                    
             }
             catch (Exception ex)
             {

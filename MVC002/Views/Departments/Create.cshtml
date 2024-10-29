@@ -1,9 +1,7 @@
-﻿
-@model Department
-
+﻿@model Department
 @{
-    ViewData["Title"] = "Create ";
-  
+    ViewData["Title"] = "Create";
+
 }
 
 <h1>Create New Department</h1>
@@ -27,7 +25,7 @@
         <input class="form-control" asp-for="DateOfCreation" />
         <span asp-validation-for="DateOfCreation" class="text-danger"></span>
     </div>
-    <input type="submit" value="Done" class="btn btn-primary" asp-action="DeptHome" />
+    <input type="submit" value="Done" class="btn btn-primary" />
     <a asp-action="Index" asp-controller="Departments" class="btn btn-dark"> Back To List </a>
 </form>
 
