@@ -18,19 +18,18 @@
 			<span asp-validation-for="Email" class="text-danger"></span>
 			<br />
 			<div class="password-container">
-				<input type="password" id="password" class="password-input" placeholder="Password" />
+				<input type="password" id="password"  asp-for="Password" class="password-input" placeholder="Password" />
 				<span asp-validation-for="Password"></span>
 			</div>
 
-
 			<br />
-			<div class="password-container">
-				<input type="password" id="confirmpassword" class="password-input" placeholder="Confirm Password" />
+			<div>
+				<input type="password" id="confirmpassword" asp-for="ConfirmPassword" class="password-input" placeholder="Confirm Password" />
 				<span asp-validation-for="ConfirmPassword "></span>
 			</div>
+			
 			<br />
-			
-			
+
 			<div class="wthree-text">
 				<label class="anim">
 					<input asp-for="IsAgree" class="checkbox" />
