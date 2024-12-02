@@ -1,5 +1,4 @@
-﻿
-@model LoginViewModel
+﻿@model LoginViewModel
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
@@ -16,8 +15,12 @@
 			<input  type="text" asp-for="Email" class="alert-danger" placeholder="Email"/>
 			<span asp-validation-for="Email" ></span>
 			<br />
-			<input type="text" asp-for="Password" class="alert-danger" placeholder="Password" />
-			<span asp-validation-for="Password"></span>
+			<div class="password-container">
+				<input type="password" id="password" class="password-input"  placeholder="Password"/>
+	           <span asp-validation-for="Password"></span>
+			</div>
+
+			
 			<br />
 
 

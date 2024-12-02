@@ -68,14 +68,18 @@ namespace MVC002.PL.Controllers
                 {
                    var Result =  await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, false);
                     if (Result.Succeeded)
+                    {
                         return RedirectToAction(nameof(Index), "Home");
-                }
+                }   }
                 else
-                { ModelState.AddModelError(string.Empty, "Password is not existed.");
+                { 
+                   ModelState.AddModelError(string.Empty, "Password is not existed.");
                 }
 			}
             else
+            { 
                 ModelState.AddModelError(string.Empty, "Email address is not existed.");
+            }
             return View(login);
         }
 

@@ -30,14 +30,17 @@ namespace MVC002
             Builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); //Allow DI for DepartmentRepository
             Builder.Services.AddAutoMapper(M => M.AddProfiles(new List<Profile>() { new UserProfile(), new DepartmentProfile(), new EmployeeProfile()  , new RoleProfile()}));
             Builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            Builder.Services.AddIdentity <ApplicationUser, IdentityRole>(Options =>
+            Builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
             {
                 Options.Password.RequireNonAlphanumeric = true;
                 Options.Password.RequireLowercase = true;
                 Options.Password.RequireUppercase = true;
                 Options.Password.RequireDigit = true;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-            Builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.AccessDeniedPath = "Home/Error"; options.LoginPath = "Account/Login"; });
+             Builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            { options.AccessDeniedPath = "Home/Error"; 
+                options.LoginPath = "Account/Login";
+            });
           var app=  Builder.Build();
 
 
