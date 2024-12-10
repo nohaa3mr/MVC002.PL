@@ -32,9 +32,9 @@ namespace MVC002.BLL.Repositories
             return _dbContext.Employees.Where(e => e.Name.ToLower().Contains(name.ToLower()));
         }
 
-        public Task<int> SaveChangesCompleted()
+        public async Task<int> SaveChangesCompleted()
         {
-            throw new NotImplementedException();
+           return await _dbContext.SaveChangesAsync();
         }
     }
 }

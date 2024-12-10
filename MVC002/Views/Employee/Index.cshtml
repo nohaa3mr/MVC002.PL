@@ -29,7 +29,7 @@
     </form>
 
 </div>
-
+<br />
 
 <a asp-controller="Employee" asp-action="Create" class="btn btn-primary">Add New Employee</a>
 <br />
@@ -62,29 +62,29 @@
             @foreach (var employee in Model)
             {
                 <tr>
-                    <td>@employee.Name</td>
                     <th><img src="~/Files/Images/@employee.ImageName" class="rounded" height="40" width="40" alt="Employee Image" /></th>
+                    <td>@employee.Name</td>
                     <td>@employee.Age</td>
                     <td>@employee.PhoneNumber</td>
                     <td>@Html.DisplayFor(e=> employee.Email)</td>
                     <td>@employee.Address</td>
                     <td>@Html.DisplayFor(e => employee.Salary)</td>
                     <td>@Html.DisplayFor(e => employee.Department.Name)</td>
+                    <td>@Html.DisplayFor(e => employee.IsActive)</td>
                     <td>@employee.HireDate</td>
+
                     <td>
+    
                         @if(employee.IsActive == true)
                         {
                             <i class="fa-solid fa-circle " style="color :forestgreen"></i>
                         }
                         else
                         {
-                      <i class="fa-solid fa-circle " style="color :red"></i>
+                              <i class="fa-solid fa-circle " style="color :red"></i>
                         }
                     </td>
-
-
                     <partial name="_ButtonsPartialView" model="@employee.Id.ToString()" />
-
                 </tr>
             }
         </tbody>
